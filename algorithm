@@ -1,0 +1,77 @@
+=====
+DATA:
+=====
+char ttt [3][3];   /* tic tac toe board */
+int i, j;
+char player1, player2;   /* the mark, X or O, the user inputs in the board */
+int checkWin;   /* checks for a win */
+
+==========
+ALGORITHM:
+==========
+--board--
+Print board:
+ "  -  |  -  |  -  "
+ "_____|_____|_____"
+ "  -  |  -  |  -  "
+ "_____|_____|_____"
+ "  -  |  -  |  -  "
+ "     |     |     "
+
+--key--
+Print key:
+ "  1  |  2  |  3  "
+ "_____|_____|_____"
+ "  4  |  5  |  6  "
+ "_____|_____|_____"
+ "  7  |  8  |  9  "
+ "     |     |    "
+
+
+--checkWin--
+/* horizontal */
+if (ttt[0][0] == ttt[0][1] && ttt[0][0] == ttt[0][2])
+ Print winner
+else if (ttt[1][0] == ttt[1][1] && ttt[1][0] == ttt[1][2])
+ Print winner
+else if (ttt[2][0] == ttt[2][1] && ttt[2][0] == ttt[2][2])
+ Print winner
+
+/* vertical */
+else if (ttt[0][0] == ttt[1][0] && ttt[0][0] == ttt[2][0])
+ Print winner
+else if (ttt[0][1] == ttt[1][1] && ttt[0][1] == ttt[2][1])
+ Print winner
+else if (ttt[0][2] == ttt[1][2] && ttt[0][2] == ttt[2][2])
+ Print winner
+
+/* diagonal */
+else if (ttt[0][0] == ttt[1][1] && ttt[0][0] == ttt[2][2])
+ Print winner
+else if (ttt[2][2] == ttt[1][1] && ttt[2][2] == ttt[0][2])
+ Print winner
+
+else 
+ Continue game
+
+--player1input--
+Print:
+ "Player 1, where would you like to mark?"
+ "Enter the number of the location you would like:  "
+Scan user's location input
+Switch case of 9 locations for user to choose from
+if (location is available)
+ Print board with updated location and key
+ else
+  Print: "Choice unavailable. Please choose another location."
+
+
+
+--player2input--
+
+--main--
+Print instructions:
+ "This program allows two users to play tic tac toe. To win, get three in a row."
+Print tic tac toe board and key
+Print:
+
