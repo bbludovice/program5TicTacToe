@@ -70,7 +70,7 @@ Print:
  "Player 1, where would you like to mark?"
  "Enter the number of the location you would like:  "
 Scan user's location input
-Switch case of 9 locations for user to choose from
+Call function: -switchCaseBoard-
 if (location is available)
  Print board with updated location and key
  else
@@ -84,15 +84,43 @@ Print:
  "Player 2, where would you like to mark?"
  "Enter the number of the location you would like:  "
 Scan user's location input
-Switch case of 9 locations for user to choose from
+Call function: -switchCaseBoard-
 if (location is available)
  Print board with updated location and key
  else
   Print: "Choice unavailable. Please choose another location."
 
+
+
+--switchCaseBoard--
+case 1: 
+ ttt[0][0] =
+case 2:
+ ttt[0][1] =
+case 3: 
+ ttt[0][2] =
+case 4: 
+ ttt[1][0] =
+case 5: 
+ ttt[1][1] =
+case 6: 
+ ttt[1][2] = 
+case 7: 
+ ttt[2][0] =
+case 8: 
+ ttt[2][1] =
+case 9: 
+ ttt[2][2] =
+default: invalid location
+
+
+
 --main--
 Print instructions:
  "This program allows two users to play tic tac toe. To win, get three in a row."
-Print tic tac toe board and key
+ "Player 1 = X || Player 2 = O"
+Call function: -board-
+Call function: -key-
 
+Call function: -player1input-
 
