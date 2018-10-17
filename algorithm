@@ -2,11 +2,12 @@
 DATA:
 =====
 char ttt [3][3]; /* tic tac toe board */
-int player = 1;  /* the current player */
+int player = 0;  /* the current player */
 int choice;      /* the location the player chooses */
 char mark;       /* the X or O */
 int checkWin;    /* checks for a win */
-
+int count;       /* counts number of moves completed */
+int i, j;        /* for rows and columns */
 ==========
 ALGORITHM:
 ==========
@@ -39,7 +40,7 @@ Print key:
 
 /* horizontal check for X */
 /* row 1 */
-if (ttt[0][0] && ttt[0][1] && ttt[0][2] == 'X')
+if (ttt[0][0] == 'X' && ttt[0][1] && ttt[0][2] == 'X')
  checkWin = 1
 
 /* row 2 */
@@ -72,9 +73,44 @@ else if (ttt[0][0] && ttt[1][1] && ttt[2][2] == 'X')
 else if (ttt[2][2] && ttt[1][1] && ttt[0][2] == 'X')
  checkWin = 1
 
+/* horizontal check for O */
+/* row 1 */
+if (ttt[0][0] && ttt[0][1] && ttt[0][2] == 'O')
+ checkWin = 1
+
+/* row 2 */
+else if (ttt[1][0] && ttt[1][1] && ttt[1][2] == 'O')
+ checkWin = 1
+
+/* row 3 */
+else if (ttt[2][0] && ttt[2][1] && ttt[2][2] == 'O')
+ checkWin = 1
+
+/* vertical check for O */
+/* column 1 */
+else if (ttt[0][0] && ttt[1][0] && ttt[2][0] == 'O')
+ checkWin = 1
+
+/* column 2 */
+else if (ttt[0][1] && ttt[1][1] && ttt[2][1] == 'O')
+ checkWin = 1
+
+/* column 3 */
+else if (ttt[0][2] && ttt[1][2] && ttt[2][2] == 'O')
+ checkWin = 1
+
+/* diagonal check for O */
+/* diagonal 1 */
+else if (ttt[0][0] && ttt[1][1] && ttt[2][2] == 'O')
+ checkWin = 1
+
+/* diagonal 2 */
+else if (ttt[2][2] && ttt[1][1] && ttt[0][2] == 'O')
+ checkWin = 1
+
 /* board full with no winner */
- else if ( /* NOTE TO SELF: How do I express that if none of the above applies, 
-              the game is complete without a winner? */
+else if ( /* NOTE TO SELF: How do I express that if none of the above applies, 
+              the game is complete without a winner? */ use a counter 
  checkWin = -1
 
 /* continue playing game */
@@ -84,8 +120,8 @@ else
 
 /* NOTE TO SELF: i'm not sure if i should call the 'player1input' and 'player2input'
    functions like this, or continue writing what I have in main */
---player1input--
-/* Player 1 is 'X' */
+--checkValidMove--
+/* make new function of scanning user input */
 Print:
  "Player 1, where would you like to mark?"
  "Enter the number of the location you would like:  "
@@ -98,28 +134,29 @@ if (location is available)
 
 
 
---player2input--
-/* Player 2 is 'O' */
-Print:
- "Player 2, where would you like to mark?"
- "Enter the number of the location you would like:  "
-Scan user's location input
-
-if (location is available)
- Print board with updated location and key
- else
-  Print: "Choice unavailable. Please choose another location."
-
-
 
 --main--
 Print instructions:
  "This program allows two users to play tic tac toe. To win, get three in a row."
  "Player 1 = X || Player 2 = O"
 
-do
+for (count = 1; count <= 9; count++)   /* counts the number of moves */  
  Call function: -board-
  Call function: -key-
+ if (player = 0)
+  Call function: -player1input-
+  else
+   Call function: -player2input-
+
+
+   
+ 
+
+ if (player == 'X')
+	player = 'O';
+ else
+	player = 'X';
+
 
  player = (player % 2)  /* determines which player is going first */
  Print: "Player %i, choose a location:  ", player
