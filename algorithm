@@ -1,10 +1,11 @@
 =====
 DATA:
 =====
-char ttt [3][3];   /* tic tac toe board */
-int i, j;
-char player1, player2;   /* the mark, X or O, the user inputs in the board */
-char checkWin;   /* checks for a win */
+char ttt [3][3]; /* tic tac toe board */
+int player = 1;  /* the current player */
+int choice;      /* the location the player chooses */
+char mark;       /* the X or O */
+int checkWin;    /* checks for a win */
 
 ==========
 ALGORITHM:
@@ -28,6 +29,7 @@ Print key:
  "     |     |     "
 
 
+
 --checkWin--
 /* 
    1 = game is completed with one winner
@@ -38,46 +40,57 @@ Print key:
 /* horizontal check for X */
 /* row 1 */
 if (ttt[0][0] && ttt[0][1] && ttt[0][2] == 'X')
- checkWin = 'X'
+ checkWin = 1
 
 /* row 2 */
 else if (ttt[1][0] && ttt[1][1] && ttt[1][2] == 'X')
- checkWin = 'X'
+ checkWin = 1
 
 /* row 3 */
 else if (ttt[2][0] && ttt[2][1] && ttt[2][2] == 'X')
- checkWin = 'X'
+ checkWin = 1
 
 /* vertical check for X */
 /* column 1 */
-else if (ttt[0][0] == ttt[1][0] && ttt[0][0] == ttt[2][0])
- return 1
-else if (ttt[0][1] == ttt[1][1] && ttt[0][1] == ttt[2][1])
- return 1
-else if (ttt[0][2] == ttt[1][2] && ttt[0][2] == ttt[2][2])
- return 1
+else if (ttt[0][0] && ttt[1][0] && ttt[2][0] == 'X')
+ checkWin = 1
+
+/* column 2 */
+else if (ttt[0][1] && ttt[1][1] && ttt[2][1] == 'X')
+ checkWin = 1
+
+/* column 3 */
+else if (ttt[0][2] && ttt[1][2] && ttt[2][2] == 'X')
+ checkWin = 1
 
 /* diagonal check for X */
-else if (ttt[0][0] == ttt[1][1] && ttt[0][0] == ttt[2][2])
- return 1
-else if (ttt[2][2] == ttt[1][1] && ttt[2][2] == ttt[0][2])
- return 1
+/* diagonal 1 */
+else if (ttt[0][0] && ttt[1][1] && ttt[2][2] == 'X')
+ checkWin = 1
+
+/* diagonal 2 */
+else if (ttt[2][2] && ttt[1][1] && ttt[0][2] == 'X')
+ checkWin = 1
 
 /* board full with no winner */
- else if (ttt /* WIP */
+ else if ( /* NOTE TO SELF: How do I express that if none of the above applies, 
+              the game is complete without a winner? */
+ checkWin = -1
 
- return -1
-
+/* continue playing game */
 else 
- return 0
+ checkWin = 0
 
+
+/* NOTE TO SELF: i'm not sure if i should call the 'player1input' and 'player2input'
+   functions like this, or continue writing what I have in main */
 --player1input--
 /* Player 1 is 'X' */
 Print:
  "Player 1, where would you like to mark?"
  "Enter the number of the location you would like:  "
 Scan user's location input
-Call function: -switchCaseBoard-
+
 if (location is available)
  Print board with updated location and key
  else
@@ -91,7 +104,7 @@ Print:
  "Player 2, where would you like to mark?"
  "Enter the number of the location you would like:  "
 Scan user's location input
-Call function: -switchCaseBoard-
+
 if (location is available)
  Print board with updated location and key
  else
@@ -99,37 +112,22 @@ if (location is available)
 
 
 
---switchCaseBoard--
-case 1: 
- ttt[0][0] =
-case 2:
- ttt[0][1] =
-case 3: 
- ttt[0][2] =
-case 4: 
- ttt[1][0] =
-case 5: 
- ttt[1][1] =
-case 6: 
- ttt[1][2] = 
-case 7: 
- ttt[2][0] =
-case 8: 
- ttt[2][1] =
-case 9: 
- ttt[2][2] =
-default: invalid location
-
-
-
 --main--
 Print instructions:
  "This program allows two users to play tic tac toe. To win, get three in a row."
  "Player 1 = X || Player 2 = O"
-Call function: -board-
-Call function: -key-
 
 do
- Call function: -player1input-
- Call function: -player2input-
- while (
+ Call function: -board-
+ Call function: -key-
+
+ player = (player % 2)  /* determines which player is going first */
+ Print: "Player %i, choose a location:  ", player
+ Scan location user inputs
+ mark = player          /* the mark, X or O, is determined by the current player */
+ /* NOTE TO SELF: I'm confused as to how it would recognize what the current player is */
+ 
+
+
+
+
