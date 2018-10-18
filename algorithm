@@ -2,7 +2,7 @@
 DATA:
 =====
 char ttt [3][3];    /* tic tac toe board */
-char player;        /* the current player, either X or O */
+char player = 'X';  /* the current player, initialized to X to begin with, either X or O */
 int choice;         /* the location the player chooses */
 int ifWin;          /* checks for a win */
 int count;          /* counter; counts number of moves completed */
@@ -143,7 +143,6 @@ do
 	Call checkWin
 while (ifWin == 0)	 /* 0 means game is still in progress; will continue to loop... */ 
 			 /* ...unless 1 (winner) or -1 (no winner) is returned from the function */
-/* NOTE TO SELF: finish up here, make sure the players change back and forth */
 
 /* changes the players from X to O and vice versa */
 if (player == 'X')
