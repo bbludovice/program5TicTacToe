@@ -26,9 +26,18 @@
 */
 #include <stdio.h>
 
+ /* global variables */
+ char ttt[3][3];	/* tic tac toe board */
+ char player = 'X';	/* the current player, initialized with X to begin, will change to 'O' later */
+ int i, j;			/* i is row; j is column */
+ int checkMove;		/* checks if the move is valid; 1 = valid, 0 = invalid */
+ int choice;		/* location the player chooses */
+ int ifWin;			/* checks for a win */
+ int count;			/* counter; counts number of moves completed */
 
-void main (void)
+void print_board (void)
 {
+ /* the gameboard */
  printf("   ______________________________\n"
  		" / \\                             \\.\n"
  		"|   |                            |.\n"
@@ -47,8 +56,13 @@ void main (void)
  		"    |   _________________________|___\n"
  		"    |  /                            /.\n"
  		"    \\_/____________________________/.\n\n");
+}
 
- 		
+
+
+void print_key (void)
+{ 
+ /* the key for the users to reference the location choices */
  printf ("                  KEY\n"
  		 "             1  |  2  |  3  \n"
  		 "           _____|_____|_____\n"
@@ -56,4 +70,137 @@ void main (void)
  		 "           _____|_____|_____\n"
  		 "             7  |  8  |  9  \n"
  		 "                |     |     \n");
+}
+
+
+
+void scan_UserInput (void)
+{
+ /* scans the user's location choice where they want to mark */
+ 
+ printf("Player %c, where would you like to mark?\n", player);		/* asks the player where they want to mark */
+ do
+  {
+	printf("Enter the number of a valid location you would like:  ");
+	scanf("%i", &choice);
+  } while(choice <= 0 || choice >= 10);				/* choice must be greater than 0 and less than 10 */
+ 
+ printf("\nYou entered: Location %i.\n", choice);		/* prints what location the user chose */
+ return choice;
+}
+
+
+
+void checkValidMove (void)
+{
+ /* checks to see if user input an available location */
+ if (ttt[i][j] == ' ')
+  {
+ 	ttt[i][j] = player;
+	checkMove = 1;
+  }
+ else
+  {
+ 	printf("Choice unavailable. Please choose another location.\n");
+	checkMove = 0;	
+  }
+}
+
+
+
+void checkWin (void)
+{
+ /* checks the board to see if there is a winner
+ 		1 = game is completed with one winner
+	   -1 = game is completed with no winner
+	    0 = game is still in progress */
+
+ /* game is complete with one winner */
+ if((ttt[0][0] == player && ttt[0][1] == player && ttt[0][2] == player) /* row 1 */ ||
+ 	(ttt[1][0] == player && ttt[1][1] == player && ttt[1][2] == player) /* row 2 */ ||
+ 	(ttt[2][0] == player && ttt[2][1] == player && ttt[2][2] == player) /* row 3 */ ||
+ 	(ttt[0][0] == player && ttt[1][0] == player && ttt[2][0] == player) /* column 1 */ ||
+ 	(ttt[0][1] == player && ttt[1][1] == player && ttt[2][1] == player) /* column 2 */ ||
+ 	(ttt[0][2] == player && ttt[1][2] == player && ttt[2][2] == player) /* column 3 */ ||
+ 	(ttt[0][0] == player && ttt[1][1] == player && ttt[2][2] == player) /* diagonal 1 */ ||
+ 	(ttt[2][2] == player && ttt[1][1] == player && ttt[0][2] == player)) /* diagonal 2 */
+ {
+ 	ifWin = 1;
+ }
+ else if (count = 9)
+ 	{
+ 	 ifWin = -1;	
+ 	}
+ else
+ 	{
+ 	 ifWin = 0;	
+ 	}
+}
+
+
+
+
+void main (void)
+{
+ /* instructions about TicTacToe */
+ printf("Welcome to Tic Tac Toe! This program allows two users to play against each other.\n"
+ 		"To win, you must get three of your marks in a row.\n\n"
+ 		"Player 1 = X || Player 2 = O\n\n");
+
+ /* board is initialized to have it cleared with spaces */
+ for(i = 0; i <= 2; i++)	/* initialize i = 0; as long as i is <= 2, perform the loop; afterwards, increment by 1 */
+ 	for(j = 0; j <= 2; j++)	/* initialize j = 0; as long as j is <= 2, perform the loop; afterwards, increment by 1 */
+ 		ttt[i][j] = ' ';	/* a blank space is placed into the TicTacToe board */
+ 
+ print_board();		/* calls the function print_board to print out the gameboard */
+ print_key();		/* calls the function print_key to print out the key */
+ 
+ checkMove = 0;		/* initialize checkMove to 0 */
+ 
+ do
+  {
+	 scan_UserInput();
+	 switch(choice)
+	 {
+	  case 1:
+			 i = 0;
+			 j = 0;
+			 break;
+	  case 2:
+	  		 i = 0;
+	  		 j = 1;
+	  		 break;
+	  case 3:
+	  		 i = 0;
+	  		 j = 2;
+	  		 break;
+	  case 4:
+	  		 i = 1;
+	  		 j = 0;
+	  		 break;
+	  case 5:
+	  		 i = 1;
+	  		 j = 1;
+	  		 break;
+	  case 6:
+	  		 i = 1;
+	  		 j = 2;
+	  		 break;
+	  case 7:
+	  		 i = 2;
+	  		 j = 0;
+	  		 break;
+	  case 8:
+	  		 i = 2;
+	  		 j = 1;
+	  		 break;
+	  case 9:
+	  		 i = 2;
+	  		 j =2;
+	  		 break;
+	  default: printf("Invalid location. Please select 1-9.");
+	 }
+	 checkValidMove();
+  } while(checkMove ==0);	/* 0 means invalid move; this loops if the user inputs a location that is already taken */
+ 
 }
