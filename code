@@ -43,14 +43,14 @@ void print_board (void)
  		"|   |                            |.\n"
  		" \\_ |                            |.\n"
  		"    |         |        |         |.\n"
+ 		"    |    %c    |    %c   |   %c     |.\n", ttt[0][0], ttt[0][1], ttt[0][2]);
+ printf("    | ________|________|________ |.\n"
  		"    |         |        |         |.\n"
- 		"    | ________|________|________ |.\n"
+ 		"    |    %c    |    %c   |   %c     |.\n", ttt[1][0], ttt[1][1], ttt[1][2]);
+ printf("    | ________|________|________ |.\n"
  		"    |         |        |         |.\n"
- 		"    |         |        |         |.\n"
- 		"    | ________|________|________ |.\n"
- 		"    |         |        |         |.\n"
- 		"    |         |        |         |.\n"
- 		"    |         |        |         |.\n"
+ 		"    |    %c    |    %c   |   %c     |.\n", ttt[2][0], ttt[2][1], ttt[2][2]);
+ printf("    |         |        |         |.\n"
  		"    |                            |.\n"
  		"    |                            |.\n"
  		"    |   _________________________|___\n"
@@ -83,7 +83,7 @@ void scan_UserInput (void)
   {
 	printf("Enter the number of a valid location you would like:  ");
 	scanf("%i", &choice);
-  } while(choice <= 0 || choice >= 10);				/* choice must be greater than 0 and less than 10 */
+  } while(choice <= 0 || choice >= 10);					/* choice must be greater than 0 and less than 10 */
  
  printf("\nYou entered: Location %i.\n", choice);		/* prints what location the user chose */
  return choice;
@@ -93,17 +93,20 @@ void scan_UserInput (void)
 
 void checkValidMove (void)
 {
- /* checks to see if user input an available location */
- if (ttt[i][j] == ' ')
+ /* checks to see if user input an available location 
+ 	1 = available choice
+ 	0 = unavailable choice */
+ if (ttt[i][j] == ' ')		/* if the array has a blank space... */
   {
- 	ttt[i][j] = player;
+ 	ttt[i][j] = player;		/* ...the array selection is now the player's character */
 	checkMove = 1;
   }
- else
+ else						/* ...else the choice is taken and player needs to select again */
   {
  	printf("Choice unavailable. Please choose another location.\n");
 	checkMove = 0;	
   }
+  return checkMove;
 }
 
 
@@ -124,19 +127,23 @@ void checkWin (void)
  	(ttt[0][2] == player && ttt[1][2] == player && ttt[2][2] == player) /* column 3 */ ||
  	(ttt[0][0] == player && ttt[1][1] == player && ttt[2][2] == player) /* diagonal 1 */ ||
  	(ttt[2][2] == player && ttt[1][1] == player && ttt[0][2] == player)) /* diagonal 2 */
- {
+ 	{
  	ifWin = 1;
- }
+ 	}
+ 
+ /* board full with no winner */
  else if (count = 9)
  	{
  	 ifWin = -1;	
  	}
+ 	
+ /* game still in play */ 
  else
  	{
- 	 ifWin = 0;	
+ 	 ifWin = 0;
  	}
+ return ifWin;
 }
-
 
 
 
@@ -152,55 +159,68 @@ void main (void)
  	for(j = 0; j <= 2; j++)	/* initialize j = 0; as long as j is <= 2, perform the loop; afterwards, increment by 1 */
  		ttt[i][j] = ' ';	/* a blank space is placed into the TicTacToe board */
  
- print_board();		/* calls the function print_board to print out the gameboard */
- print_key();		/* calls the function print_key to print out the key */
- 
  checkMove = 0;		/* initialize checkMove to 0 */
  
  do
-  {
-	 scan_UserInput();
-	 switch(choice)
-	 {
-	  case 1:
-			 i = 0;
-			 j = 0;
-			 break;
-	  case 2:
-	  		 i = 0;
-	  		 j = 1;
-	  		 break;
-	  case 3:
-	  		 i = 0;
-	  		 j = 2;
-	  		 break;
-	  case 4:
-	  		 i = 1;
-	  		 j = 0;
-	  		 break;
-	  case 5:
-	  		 i = 1;
-	  		 j = 1;
-	  		 break;
-	  case 6:
-	  		 i = 1;
-	  		 j = 2;
-	  		 break;
-	  case 7:
-	  		 i = 2;
-	  		 j = 0;
-	  		 break;
-	  case 8:
-	  		 i = 2;
-	  		 j = 1;
-	  		 break;
-	  case 9:
-	  		 i = 2;
-	  		 j =2;
-	  		 break;
-	  default: printf("Invalid location. Please select 1-9.");
-	 }
-	 checkValidMove();
-  } while(checkMove ==0);	/* 0 means invalid move; this loops if the user inputs a location that is already taken */
+ 	{
+ 	 checkWin();
+	 do
+		{
+	     print_board();		/* calls the function print_board to print out the gameboard */
+	     print_key();		/* calls the function print_key to print out the key */
+		 scan_UserInput();
+		 switch(choice)
+		 {
+		  case 1:
+				 i = 0;
+				 j = 0;
+				 break;
+		  case 2:
+		  		 i = 0;
+		  		 j = 1;
+		  		 break;
+		  case 3:
+		  		 i = 0;
+		  		 j = 2;
+		  		 break;
+		  case 4:
+		  		 i = 1;
+		  		 j = 0;
+		  		 break;
+		  case 5:
+		  		 i = 1;
+		  		 j = 1;
+		  		 break;
+		  case 6:
+		  		 i = 1;
+		  		 j = 2;
+		  		 break;
+		  case 7:
+		  		 i = 2;
+		  		 j = 0;
+		  		 break;
+		  case 8:
+		  		 i = 2;
+		  		 j = 1;
+		  		 break;
+		  case 9:
+		  		 i = 2;
+		  		 j =2;
+		  		 break;
+		  default: printf("Invalid location. Please select 1-9.");
+	 	 }
+	 	 checkValidMove();
+  	  	}while(checkMove == 0);	/* 0 means invalid move; this loops if the user inputs a location that is already taken */
  
+  	 
+ 	ttt[i][j] = player;
+ 	print_board();
+ 	
+ 	/* changes the players from X to O and vice versa */
+ 	if(player == 'X')	 	 /* if the player is X... */
+ 		player = 'O';		 /* ...change the character to O */
+	else
+ 		player = 'X';		 /* ...else change the character to X */
+	} while (ifWin == 0);	/* 0 means game is still in progress; it will continue the loop unless 
+ 							   1 (winner) or -1 (no winner) is retured from the function */
 }
