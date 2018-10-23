@@ -86,6 +86,7 @@ void scan_UserInput (void)
   } while(choice <= 0 || choice >= 10);					/* choice must be greater than 0 and less than 10 */
  
  printf("\nYou entered: Location %i.\n", choice);		/* prints what location the user chose */
+ 
  return choice;
 }
 
@@ -132,7 +133,7 @@ void checkWin (void)
  	}
  
  /* board full with no winner */
- else if (count = 9)
+ else if (count == 9)
  	{
  	 ifWin = -1;	
  	}
@@ -141,8 +142,8 @@ void checkWin (void)
  else
  	{
  	 ifWin = 0;
+
  	}
- return ifWin;
 }
 
 
@@ -158,15 +159,22 @@ void main (void)
  for(i = 0; i <= 2; i++)	/* initialize i = 0; as long as i is <= 2, perform the loop; afterwards, increment by 1 */
  	for(j = 0; j <= 2; j++)	/* initialize j = 0; as long as j is <= 2, perform the loop; afterwards, increment by 1 */
  		ttt[i][j] = ' ';	/* a blank space is placed into the TicTacToe board */
+ 		
+ print_board();		/* calls the function print_board to print out the gameboard */
  
  checkMove = 0;		/* initialize checkMove to 0 */
  
  do
  	{
  	 checkWin();
+ 	 if (ifWin == 1)
+ 	 	{
+ 	 		printf("\nCongratulations player %c, you won!\n", player);
+ 	 	}
+ 	 else if (ifWin == 0)
+ 	 {
 	 do
 		{
-	     print_board();		/* calls the function print_board to print out the gameboard */
 	     print_key();		/* calls the function print_key to print out the key */
 		 scan_UserInput();
 		 switch(choice)
@@ -211,16 +219,18 @@ void main (void)
 	 	 }
 	 	 checkValidMove();
   	  	}while(checkMove == 0);	/* 0 means invalid move; this loops if the user inputs a location that is already taken */
- 
-  	 
+ 	}
+ 	
  	ttt[i][j] = player;
  	print_board();
  	
- 	/* changes the players from X to O and vice versa */
- 	if(player == 'X')	 	 /* if the player is X... */
- 		player = 'O';		 /* ...change the character to O */
-	else
- 		player = 'X';		 /* ...else change the character to X */
+ 	
+ 		/* changes the players from X to O and vice versa */
+ 		if(player == 'X')	 	 /* if the player is X... */
+ 			player = 'O';		 /* ...change the character to O */
+		else
+ 			player = 'X';		 /* ...else change the character to X */
+	
 	} while (ifWin == 0);	/* 0 means game is still in progress; it will continue the loop unless 
  							   1 (winner) or -1 (no winner) is retured from the function */
 }
