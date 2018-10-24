@@ -80,7 +80,7 @@ void scan_UserInput (void)
 	/* scans the user's location choice where they want to mark */
  
  	printf("Player %c, where would you like to mark?\n", player);		/* asks the player where they want to mark */
- 	do
+ 	do		/* NOTE TO SELF: try to change to while itself to check for letters */
   	{
 		printf("Enter the number of a valid location you would like:  ");
 		scanf("%i", &choice);
@@ -164,69 +164,66 @@ void main (void)
  
  do
  	{
- 	 checkWin();
- 	 if (ifWin == -1)			/* when gameboard is full, but no players win */
- 	 	{
- 	 		printf("\nA tie! No winners here! Thanks for playing!\n");	
- 	 	}
- 	 	
- 	 if (ifWin == 1)			/* when one player wins */
- 	 	{
- 	 		printf("\nCongratulations player %c, you won! Thanks for playing!\n", player);
- 	 	}
- 	 else if (ifWin == 0)
- 	 	{
-	 		do
-				{
-		    	 print_key();		/* calls the function print_key to print out the key */
-				 scan_UserInput();
-				 switch(choice)
-				 {
-			 	 case 1:
-						 i = 0;
-						 j = 0;
-						 break;
-				  case 2:
-				  		 i = 0;
-				  		 j = 1;
-				  		 break;
-				  case 3:
-				  		 i = 0;
-				  		 j = 2;
-				  		 break;
-				  case 4:
-				  		 i = 1;
-				  		 j = 0;
-				  		 break;
-				  case 5:
-				  		 i = 1;
-				  		 j = 1;
-				  		 break;
-				  case 6:
-				  		 i = 1;
-				  		 j = 2;
-				  		 break;
-				  case 7:
-				  		 i = 2;
-				  		 j = 0;
-				  		 break;
-				  case 8:
-				  		 i = 2;
-				  		 j = 1;
-				  		 break;
-				  case 9:
-				  		 i = 2;
-				  		 j =2;
-				  		 break;
-			 	 default: printf("Invalid location. Please select 1-9.");
-	 	 	 	 }
-	 	 	 	checkValidMove();
-  	  			}while(checkMove == 0);	/* 0 means invalid move; this loops if the user inputs a location that is already taken */
- 			}
- 	
+ 		do
+			{
+	    	 print_key();		/* calls the function print_key to print out the key */
+			 scan_UserInput();
+			 switch(choice)
+			 {
+		 	 case 1:
+					 i = 0;
+					 j = 0;
+					 break;
+			  case 2:
+			  		 i = 0;
+			  		 j = 1;
+			  		 break;
+			  case 3:
+			  		 i = 0;
+			  		 j = 2;
+			  		 break;
+			  case 4:
+			  		 i = 1;
+			  		 j = 0;
+			  		 break;
+			  case 5:
+			  		 i = 1;
+			  		 j = 1;
+			  		 break;
+			  case 6:
+			  		 i = 1;
+			  		 j = 2;
+			  		 break;
+			  case 7:
+			  		 i = 2;
+			  		 j = 0;
+			  		 break;
+			  case 8:
+			  		 i = 2;
+			  		 j = 1;
+			  		 break;
+			  case 9:
+			  		 i = 2;
+			  		 j =2;
+			  		 break;
+		 	 default: printf("Invalid location. Please select 1-9.");
+ 	 	 	 }
+ 	 	 	checkValidMove();
+  			}while(checkMove == 0);	/* 0 means invalid move; this loops if the user inputs a location that is already taken */
+  		count = count + 1;		 /* increments the counter by 1 in order to keep track of how many turns have passed */
+	
  		ttt[i][j] = player;
  		print_board();
- 	
+	 	checkWin();
+ 		 if (ifWin == -1)		/* when gameboard is full, but no players win */
+ 	 		{
+ 	 			printf("\nA tie! No winners here! Thanks for playing!\n");	
+ 	 		}
+ 	 	
+ 		 else if (ifWin == 1)	/* when one player wins */
+ 	 		{
+ 	 			printf("\nCongratulations player %c, you won! Thanks for playing!\n", player);
+ 	 		}	 	 	
  	
  		/* changes the players from X to O and vice versa */
  		if(player == 'X')	 	 /* if the player is X... */
@@ -234,8 +231,8 @@ void main (void)
 		else
  			player = 'X';		 /* ...else change the character to X */
  		
- 		count = count + 1;
-	
+ 		
+
 	} while (ifWin == 0 && count <= 9);	/* 0 means game is still in progress; it will continue the loop unless 
- 							   1 (winner) or -1 (no winner) is retured from the function */
+ 							  			   1 (winner) or -1 (no winner) is retured from the function */
 }
