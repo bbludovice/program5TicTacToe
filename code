@@ -5,11 +5,11 @@
 |: |                                                             | :| 
 | :|                 C program by Breanne Ludovice               |: | 
 |: |                                                             | :|
-| :|                      CS1310 October 17, 2018                |: |
+| :|                      CS1310 October 25, 2018                |: |
 |: |                                                             | :| 
 | :|              Assignment: Program 5, Tic Tac Toe             |: | 
-|: |                                                             | :|
-| :|                             _ _                             |: | 
+|: |   This program allows two users to play TicTacToe against   | :|
+| :|       each other. The winner acquires three in a row.       |: | 
 |: |                           _{ ' }_                           | :| 
 | :|                          { `.!.` }                          |: |
 |: |                          ',_/Y\_,'                          | :| 
@@ -34,6 +34,7 @@
  int choice;		/* location the player chooses */
  int ifWin;			/* checks for a win */
  int count;			/* counter; counts number of moves completed */
+ int playAgain;		/* asks the user if they want to restart the game again */
  
 
 void print_board (void)
@@ -146,13 +147,26 @@ void checkWin (void)
 
 
 
+void restart_game (void)
+{
+	/* asks the user if they would like to play again the game with a blank gameboard */
+	printf ("                 ***************************************\n");
+	printf ("                      Would you like to play again?   \n");
+	printf ("                    *********************************\n");
+	printf ("\n\nEnter 1 to restart, any other key to Quit:  ");
+ 	scanf("%i", &playAgain);	
+}
+
+
 void main (void)
 {
  	/* instructions about TicTacToe */
- 	printf("Welcome to Tic Tac Toe! This program allows two users to play against each other.\n"
+ 	printf ("Welcome to Tic Tac Toe! This program allows two users to play against each other.\n"
+ 			"Below the game board is a key. The key shows which locations you can mark.\n"
  			"To win, you must get three of your marks in a row.\n\n"
  			"Player 1 = X || Player 2 = O\n\n");
-
+ do
+ {
  	/* board is initialized to have it cleared with spaces */
  for(i = 0; i <= 2; i++)	/* initialize i = 0; as long as i is <= 2, perform the loop; afterwards, increment by 1 */
  	for(j = 0; j <= 2; j++)	/* initialize j = 0; as long as j is <= 2, perform the loop; afterwards, increment by 1 */
@@ -161,13 +175,14 @@ void main (void)
  print_board();		/* calls the function print_board to print out the gameboard */
  
  checkMove = 0;		/* initialize checkMove to 0 */
+ count = 0;			/* initializes the count to 0 */
  
  do
  	{
  		do
 			{
 	    	 print_key();		/* calls the function print_key to print out the key */
-			 scan_UserInput();
+			 scan_UserInput();	/* scans the value the user typed in */
 			 switch(choice)
 			 {
 		 	 case 1:
@@ -208,21 +223,31 @@ void main (void)
 			  		 break;
 		 	 default: printf("Invalid location. Please select 1-9.");
  	 	 	 }
- 	 	 	checkValidMove();
+ 	 	 	checkValidMove();		/* calls the function to check if the user input a valid move */
   			}while(checkMove == 0);	/* 0 means invalid move; this loops if the user inputs a location that is already taken */
-  		count = count + 1;		 /* increments the counter by 1 in order to keep track of how many turns have passed */
+  			
+  		count = count + 1;			/* increments the counter by 1 in order to keep track of how many turns have passed */
 	
- 		ttt[i][j] = player;
- 		print_board();
-	 	checkWin();
- 		 if (ifWin == -1)		/* when gameboard is full, but no players win */
+ 		ttt[i][j] = player;			/* the location the user entered is now marked with the player's mark (X or O) */
+ 		print_board();				/* prints the game board */
+	 	checkWin();					/* checks to see if there are any winners */
+ 		 if (ifWin == -1)			/* when gameboard is full, but no players win */
  	 		{
- 	 			printf("\nA tie! No winners here! Thanks for playing!\n");	
+ 	 			printf("\nA tie! No winners here! Thanks for playing!\n");
  	 		}
  	 	
  		 else if (ifWin == 1)	/* when one player wins */
  	 		{
- 	 			printf("\nCongratulations player %c, you won! Thanks for playing!\n", player);
+ 	 			printf ("\n  .-----------------------------------------------------------------.\n"
+ 	 					" /  .-.                                                         .-.  \\\n"
+ 	 					"|  /   \\           Congratulations player %c, you won!          /   \\  |\n", player);
+ 	 			printf ("| |\\_.  |                                                     |    /| |\n"
+						"|\\|  | /|                 Thanks for playing!                 |\\  | |/|\n"
+						"| `---' |                                                     | `---' |\n"
+						"|       |-----------------------------------------------------|       |\n"
+						"\\       |                                                     |       /\n"
+						" \\     /                                                       \\     /\n"
+						"  `---'                                                         `---'\n");
  	 		}	 	 	
  	
  		/* changes the players from X to O and vice versa */
@@ -230,9 +255,12 @@ void main (void)
  			player = 'O';		 /* ...change the character to O */
 		else
  			player = 'X';		 /* ...else change the character to X */
- 		
- 		
-
 	} while (ifWin == 0 && count <= 9);	/* 0 means game is still in progress; it will continue the loop unless 
  							  			   1 (winner) or -1 (no winner) is retured from the function */
+	do
+	{
+	 restart_game();			/* restarts the game */
+	} while (ifWin == 0 && count <= 9);	
+  } while (playAgain == 1);							  			   
+
 }
